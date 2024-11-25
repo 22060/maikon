@@ -1,5 +1,5 @@
 /***********************************************************************/
-/*  A/D•ÏŠ·Ší‚Ì˜A‘±ƒXƒLƒƒƒ“ƒ‚[ƒh‚ğg‚Á‚½‰‰K                    */
+/*  A/Dï¿½ÏŠï¿½ï¿½ï¿½Ì˜Aï¿½ï¿½ï¿½Xï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½K                    */
 /***********************************************************************/
 
 #include "iodefine.h"
@@ -242,14 +242,15 @@ void main(void)
 		if (CMT1.CMCSR.BIT.CMF)
 		{
 			CMT1.CMCSR.BIT.CMF = 0;
-			printf("%d %d\n", count *1000,500);
+			printf("%d %d\n", count * 1000, 500);
 		}
 		if (CMT0.CMCSR.BIT.CMF)
 		{
 			CMT0.CMCSR.BIT.CMF = 0;
 			tmc++;
 		}
-		if(tmc < 5){
+		if (tmc < 5)
+		{
 			tmc = 0;
 			count++;
 		}
@@ -257,8 +258,21 @@ void main(void)
 #endif
 
 #ifdef ex6
+	typedef struct
+	{
+		int RS;
+		int RW;
+
+	} LCD;
 	_UWORD ad_rst = 0;
 	_SBYTE str[16] = {' ', ' ', 'A', 'D', 'D', 'R', '0', ' ', '=', ' ', '0', '0', '0', ' ', ' ', '\0'};
+	LCD inst = {0, 0};
+	LCD data = {1, 0};
+	int time = 0;
+	int count;
+	int flag[2] = {0, 2};
+	int loopc = 0;
+	int tms[5] = {0, 1, 40, 1, 40};
 	STB.CR4.BIT._AD0 = 0;
 	STB.CR4.BIT._CMT = 0;
 	AD0.ADCSR.BIT.ADM = 3;
@@ -274,6 +288,7 @@ void main(void)
 	CMT1.CMCOR = 1;			// ?A
 	CMT1.CMCOR = 19531 - 1;
 	LCD_init();
+	time = count;
 	while (1)
 	{
 
@@ -290,15 +305,72 @@ void main(void)
 				str[10] = (ad_rst / 100 == 10) ? '0' : ad_rst / 100 + '0';
 				str[11] = (ad_rst / 10) % 10 + '0';
 				str[12] = ad_rst % 10 + '0';
-				LCD_cursor(0, 0);
-				LCD_putstr(str);
+				// LCD_cursor(0, 0);
+				if (count - time > tms[loopc])
+				{
+					time = count;
+					switch (loopc - 1)
+					{
+					case 0:
+						LCD_E = 0;
+						LCD_RS = inst.RS;
+						LCD_RW = inst.RW;
+						LCD_E = 1;
+						LCD_DATA = (0x80 | 0 | 0 << 6);
+						break;
+					case 1:
+						LCD_E = 0;
+						break;
+					case 2:
+						LCD_E = 0;
+						LCD_RS = data.RS;
+						LCD_RW = data.RW;
+						LCD_E = 1;
+						LCD_DATA = str;
+						break;
+					case 3:
+						LCD_E = 0;
+						break;
+					}
+				}
 				ad_rst = AD0.ADDR1 >> 6;
 				str[9] = (ad_rst / 100 == 10) ? '1' : ' ';
 				str[10] = (ad_rst / 100 == 10) ? '0' : ad_rst / 100 + '0';
 				str[11] = (ad_rst / 10) % 10 + '0';
 				str[12] = ad_rst % 10 + '0';
-				LCD_cursor(0, 1);
-				LCD_putstr(str);
+
+				if (count - time > tms[loopc])
+				{
+					time = count;
+					switch (loopc - 1)
+					{
+					case 0:
+						LCD_E = 0;
+						LCD_RS = inst.RS;
+						LCD_RW = inst.RW;
+						LCD_E = 1;
+						LCD_DATA = (0x80 | 0 | 0 << 6);
+						break;
+					case 1:
+						LCD_E = 0;
+						break;
+					case 2:
+						LCD_E = 0;
+						LCD_RS = data.RS;
+						LCD_RW = data.RW;
+						LCD_E = 1;
+						LCD_DATA = str;
+						break;
+					case 3:
+						LCD_E = 0;
+						break;
+					}
+				}
+				loopc++;
+				if (loopc == 5)
+				{
+					loopc = 0;
+				}
 			}
 		}
 
@@ -317,8 +389,6 @@ void main(void)
 	}
 
 #endif
-
-
 }
 
 #ifdef ex3
