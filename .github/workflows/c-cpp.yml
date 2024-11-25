@@ -15,5 +15,5 @@ jobs:
 
     - name: Compile and Run
       run: |
-        cd adc_nscan
-        make
+        cd make
+        make ./adc_nscan_Debug.mak
