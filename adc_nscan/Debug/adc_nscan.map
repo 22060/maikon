@@ -1,0 +1,28 @@
+Optimizing Linkage Editor (V.10.02.01.000)        25-Nov-2024 14:53:12
+
+*** Options ***
+
+-subcommand=C:\Users\KOJOR_~1\AppData\Local\Temp\hmkE412.tmp
+noprelink
+rom D=R
+nomessage
+list "..\adc_nscan\Debug\adc_nscan.map"
+nooptimize
+-start=DVECTTBL,DINTTBL,PIntPRG/04000000,PResetPRG/04000800,P,C,C$BSEC,C$DSEC,D/04001000,B,R/04020000,S/04030000
+nologo
+-input="..\adc_nscan\Debug\adc_nscan.obj"
+-input="..\adc_nscan\Debug\dbsct.obj"
+-input="..\adc_nscan\Debug\hwsetup.obj"
+-input="..\adc_nscan\Debug\intprg.obj"
+-input="..\adc_nscan\Debug\resetprg.obj"
+-input="..\adc_nscan\Debug\sbrk.obj"
+-input="..\adc_nscan\Debug\vecttbl.obj"
+-library="..\adc_nscan\Debug\adc_nscan.lib"
+-output="..\adc_nscan\Debug\adc_nscan.abs"
+end
+
+*** Error information ***
+
+** L2310 (E) Undefined external symbol "_LCD_cursor" referenced in "..\adc_nscan\Debug\adc_nscan.obj"
+** L2310 (E) Undefined external symbol "_LCD_putstr" referenced in "..\adc_nscan\Debug\adc_nscan.obj"
+** L2310 (E) Undefined external symbol "_LCD_init" referenced in "..\adc_nscan\Debug\adc_nscan.obj"

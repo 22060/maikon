@@ -1,0 +1,4 @@
+プロジェクト名 : adc_nscan
+
+Renesas SuperH RISC engine Standard Toolchainを9.4.1.0 -> 9.4.3.0にアップグレードした。
+

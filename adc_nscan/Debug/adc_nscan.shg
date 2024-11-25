@@ -1,0 +1,4 @@
+-cpu=sh2
+-output="C:\WorkSpace\adc_nscan\adc_nscan\Debug\adc_nscan.lib"
+-gbr=auto
+-head=runtime,new,stdio,stdlib,string

@@ -1,0 +1,7 @@
+{
+    "files.encoding": "shiftjis",
+    "C_Cpp.default.includePath": [
+        "C:\\Program Files (x86)\\Renesas\\Hew\\Tools\\Renesas\\Sh\\9_4_3\\include",
+        "${default}"
+    ]
+}
