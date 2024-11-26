@@ -126,8 +126,8 @@ void main(void)
 	AD0.ADCR.BIT.ADST = 1;
 
 	CMT0.CMCSR.BIT.CKS = 1;
-	CMT0.CMCSR.BIT.CKS = 1; // ?@ CKS???(0:1/8, 1:1/32, 2:1/128, 3:1/512)
-	CMT0.CMCOR = 1;			// ?A
+	CMT0.CMCSR.BIT.CKS = 1;
+	CMT0.CMCOR = 1;			
 	LCD_init();
 	while (1)
 	{
@@ -299,6 +299,7 @@ void main(void)
 				str[12] = ad_rst % 10 + '0';
 				LCD_cursor(0, 1);
 				LCD_putstr(str);
+				
 			}
 		}
 
